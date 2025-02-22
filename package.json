@@ -5,6 +5,7 @@
   "description": "## Overview Git Profile Manager (`gpm`) is a CLI tool that automates setting up folder-specific Git profiles on Windows, Linux, and Mac. It allows users to define different Git usernames and emails for specific projects.",
   "main": "index.js",
   "scripts": {
+    "cli-setup": "npm install && npm link",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

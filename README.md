@@ -18,5 +18,5 @@ Ensure you have the following installed:
 ### Steps to Install
 1. Clone the project:
    ```sh
-   git clone https://github.com/yourusername/git-profile-manager.git
+   git clone https://github.com/ZUBERKHAN034/git-profile-manager.git
    cd git-profile-manager
