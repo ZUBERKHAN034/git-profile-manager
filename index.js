@@ -89,6 +89,8 @@ function removeProfile(dir) {
     }
 }
 
+program.name("gpm");
+
 program.command("init").description("Initialize Git profile for current folder").action(initGitProfile);
 program.command("list").description("List all configured Git profiles").action(listProfiles);
 program.command("remove <dir>").description("Remove Git profile for a folder").action(removeProfile);
