@@ -60,13 +60,30 @@ function listProfiles() {
         return;
     }
     const content = fs.readFileSync(GLOBAL_GITCONFIG, "utf8");
-    const matches = content.match(/gitdir:(.*?)\//g);
+    const matches = content.match(/includeIf\s*"gitdir:(.*?)"\s*\]\n\s*path\s*=\s*(.*?)\n/gm);
     if (!matches) {
         console.log("No folder-specific Git profiles found.");
         return;
     }
     console.log("Configured Git Profiles:");
-    matches.forEach(match => console.log("- ", match.replace("gitdir:", "").replace("/", "")));
+    matches.forEach(match => {
+        const dirMatch = match.match(/"gitdir:(.*?)"/);
+        const pathMatch = match.match(/path = (.*?)\n/);
+        if (dirMatch && pathMatch) {
+            const dir = dirMatch[1];
+            const gitconfigPath = pathMatch[1];
+            if (fs.existsSync(gitconfigPath)) {
+                const gitConfigContent = fs.readFileSync(gitconfigPath, "utf8");
+                const nameMatch = gitConfigContent.match(/name = (.*)/);
+                const emailMatch = gitConfigContent.match(/email = (.*)/);
+                const name = nameMatch ? nameMatch[1] : "N/A";
+                const email = emailMatch ? emailMatch[1] : "N/A";
+                console.log(`- ${dir}: ${name} <${email}>`);
+            } else {
+                console.log(`- ${dir}: No .gitconfig found`);
+            }
+        }
+    });
 }
 
 function removeProfile(dir) {
